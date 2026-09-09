@@ -69,11 +69,6 @@ const PromotionalBanner = ({ page = "Home" }) => {
             Premium flower, refined experiences, and a community that knows the difference.
           </p>
           
-            <a href="/shop"
-            className="inline-block font-body text-xs tracking-[0.15em] uppercase text-sand border border-sand/40 px-6 py-2.5 w-fit hover:bg-sand hover:text-sage transition-all duration-300"
-          >
-            Explore the Collection
-          </a>
         </div>
       </div>
 
