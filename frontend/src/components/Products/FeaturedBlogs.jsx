@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchPublishedBlogs } from "../../redux/slices/blogsSlice.js";
+import { fetchPublishedBlogs } from "../../redux/slices/blogSlice.js";
 
 const categoryColors = {
   Education: "text-sage border-sage/30 bg-sage/5",
