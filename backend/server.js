@@ -19,7 +19,21 @@ const blogRoutes = require("./routes/blogRoutes");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+// ── CORS ──────────────────────────────────────────────────────────────────────
+app.use(cors({
+  origin: [
+    "https://green-leaf-vo5y.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000",
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
+// Handle preflight requests
+app.options("*", cors());
 
 connectDB();
 
@@ -40,7 +54,6 @@ app.use("/api/admin/users", adminRoutes);
 app.use("/api/admin/products", productAdminRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
 
-// For local development
 if (process.env.NODE_ENV !== "production") {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
