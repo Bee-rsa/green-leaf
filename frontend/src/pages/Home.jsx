@@ -5,7 +5,6 @@ import FeaturesSection from "../components/Products/FeaturesSection";
 import GenderCollectionSection from "../components/Products/GenderCollectionSection";
 import NewArrivals from "../components/Products/NewArrivals";
 import ProductGrid from "../components/Products/ProductGrid";
-import ReviewsSection from "../components/ReviewsSection";
 import PromotionalBanner from "../components/Products/PromotionalBanner";
 import FeaturedBlogs from "../components/Products/FeaturedBlogs";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,7 +31,6 @@ const Home = () => {
       <FeaturesSection />
       <GenderCollectionSection />
       <PromotionalBanner page="Home" />
-      <ReviewsSection />
       <FeaturedBlogs />
 
       {products && products.length > 0 && (
