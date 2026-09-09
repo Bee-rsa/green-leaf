@@ -21,12 +21,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const PORT = process.env.PORT || 3000;
-
 connectDB();
 
 app.get("/", (req, res) => {
-  res.send("WELCOME TO RABBIT API!");
+  res.send("WELCOME TO GREEN LEAF API!");
 });
 
 app.use("/api/users", userRoutes);
@@ -38,11 +36,16 @@ app.use("/api/upload", uploadRoutes);
 app.use("/api", subscribeRoute);
 app.use("/api/promotions", promotionRoutes);
 app.use("/api/blogs", blogRoutes);
-
 app.use("/api/admin/users", adminRoutes);
 app.use("/api/admin/products", productAdminRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+// For local development
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
