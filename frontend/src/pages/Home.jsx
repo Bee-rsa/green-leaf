@@ -5,11 +5,11 @@ import FeaturesSection from "../components/Products/FeaturesSection";
 import GenderCollectionSection from "../components/Products/GenderCollectionSection";
 import NewArrivals from "../components/Products/NewArrivals";
 import ProductGrid from "../components/Products/ProductGrid";
+import ReviewsSection from "../components/ReviewsSection";
 import PromotionalBanner from "../components/Products/PromotionalBanner";
+import FeaturedBlogs from "../components/Products/FeaturedBlogs";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductsByFilters } from "../redux/slices/productsSlice";
-import FeaturedBlogs from "../components/Products/FeaturedBlogs";
-
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -30,15 +30,21 @@ const Home = () => {
       <Hero />
       <NewArrivals />
       <FeaturesSection />
-      
-      <PromotionalBanner page="Home" />
-
       <GenderCollectionSection />
-
+      <PromotionalBanner page="Home" />
+      <ReviewsSection />
       <FeaturedBlogs />
 
+      {products && products.length > 0 && (
+        <div className="container mx-auto">
+          <h2 className="text-xl text-center font-semibold mb-4">
+            Top Wears for Women
+          </h2>
+          <ProductGrid products={products} loading={loading} error={error} />
+        </div>
+      )}
+
       <FeaturedCollection />
-      
     </div>
   );
 };
