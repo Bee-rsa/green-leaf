@@ -3,12 +3,18 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchPublishedBlogs } from "../../redux/slices/blogSlice.js";
+import { fetchPublishedBlogs } from "../../redux/slices/blogsSlice.js";
 
 const categoryColors = {
   Education: "text-sage border-sage/30 bg-sage/5",
   Lifestyle: "text-wood border-wood/30 bg-wood/5",
   Wellness: "text-gray-500 border-gray-200 bg-gray-50",
+};
+
+const getPostImage = (post) => {
+  if (!post?.blocks || !Array.isArray(post.blocks)) return null;
+  const imageBlock = post.blocks.find((b) => b.type === "image" && b.imageUrl);
+  return imageBlock ? imageBlock.imageUrl : null;
 };
 
 const FeaturedBlogs = () => {
@@ -20,11 +26,16 @@ const FeaturedBlogs = () => {
     dispatch(fetchPublishedBlogs());
   }, [dispatch]);
 
-  // Up to 4 posts, featured first
-  const featured = published.find((p) => p.featured) || published[0];
-  const rest = published.filter((p) => p._id !== featured?._id).slice(0, 3);
+  // Guard — ensure published is always an array
+  const posts = Array.isArray(published) ? published : [];
 
-  if (loading || !featured) return null;
+  const featured = posts.find((p) => p.featured) || posts[0];
+  const rest = posts.filter((p) => p._id !== featured?._id).slice(0, 3);
+
+  // Don't render if loading or no posts
+  if (loading || posts.length === 0 || !featured) return null;
+
+  const featuredImage = getPostImage(featured);
 
   return (
     <section className="py-20 px-6 bg-white">
@@ -49,7 +60,7 @@ const FeaturedBlogs = () => {
           </button>
         </div>
 
-        {/* 4-column grid — featured takes 2 cols, rest take 1 each */}
+        {/* 4-column grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
           {/* Featured — spans 2 columns */}
@@ -57,15 +68,21 @@ const FeaturedBlogs = () => {
             onClick={() => navigate(`/journal/${featured.slug}`)}
             className="xl:col-span-2 group cursor-pointer flex flex-col border border-gray-100 rounded-sm overflow-hidden hover:border-gray-200 transition-colors duration-300"
           >
-            {featured.blocks?.find((b) => b.type === "image" && b.imageUrl) && (
-              <div className="h-52 overflow-hidden flex-shrink-0">
+            <div className="h-56 overflow-hidden flex-shrink-0">
+              {featuredImage ? (
                 <img
-                  src={featured.blocks.find((b) => b.type === "image" && b.imageUrl).imageUrl}
+                  src={featuredImage}
                   alt={featured.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-              </div>
-            )}
+              ) : (
+                <div className="w-full h-full bg-sage/20 flex items-center justify-center">
+                  <p className="font-body text-xs tracking-widest uppercase text-sage/50">
+                    {featured.category}
+                  </p>
+                </div>
+              )}
+            </div>
 
             <div className="p-6 flex flex-col flex-1">
               <div className="flex items-center gap-3 mb-3">
@@ -94,51 +111,60 @@ const FeaturedBlogs = () => {
           </div>
 
           {/* Rest — 1 column each */}
-          {rest.map((post) => (
-            <div
-              key={post._id}
-              onClick={() => navigate(`/journal/${post.slug}`)}
-              className="group cursor-pointer flex flex-col border border-gray-100 rounded-sm overflow-hidden hover:border-gray-200 transition-colors duration-300"
-            >
-              {post.blocks?.find((b) => b.type === "image" && b.imageUrl) && (
+          {rest.map((post) => {
+            const postImage = getPostImage(post);
+            return (
+              <div
+                key={post._id}
+                onClick={() => navigate(`/journal/${post.slug}`)}
+                className="group cursor-pointer flex flex-col border border-gray-100 rounded-sm overflow-hidden hover:border-gray-200 transition-colors duration-300"
+              >
                 <div className="h-36 overflow-hidden flex-shrink-0">
-                  <img
-                    src={post.blocks.find((b) => b.type === "image" && b.imageUrl).imageUrl}
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-              )}
-
-              <div className="p-5 flex flex-col flex-1">
-                <div className="flex items-center gap-2 mb-3 flex-wrap">
-                  <span className={`font-body text-xs px-2 py-0.5 border rounded-full ${categoryColors[post.category]}`}>
-                    {post.category}
-                  </span>
-                  <span className="font-body text-xs text-gray-500">
-                    {post.readTime} min read
-                  </span>
+                  {postImage ? (
+                    <img
+                      src={postImage}
+                      alt={post.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-sand flex items-center justify-center">
+                      <p className="font-body text-xs tracking-widest uppercase text-gray-400">
+                        {post.category}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
-                <h3 className="font-heading text-lg text-gray-800 leading-snug mb-2 group-hover:text-sage transition-colors duration-300 line-clamp-3">
-                  {post.title}
-                </h3>
+                <div className="p-5 flex flex-col flex-1">
+                  <div className="flex items-center gap-2 mb-3 flex-wrap">
+                    <span className={`font-body text-xs px-2 py-0.5 border rounded-full ${categoryColors[post.category]}`}>
+                      {post.category}
+                    </span>
+                    <span className="font-body text-xs text-gray-500">
+                      {post.readTime} min read
+                    </span>
+                  </div>
 
-                <p className="font-body text-xs text-gray-600 leading-relaxed line-clamp-3 flex-1">
-                  {post.excerpt}
-                </p>
+                  <h3 className="font-heading text-lg text-gray-800 leading-snug mb-2 group-hover:text-sage transition-colors duration-300 line-clamp-3">
+                    {post.title}
+                  </h3>
 
-                <div className="mt-4">
-                  <span className="font-body text-xs tracking-[0.15em] uppercase text-gray-400 group-hover:text-sage transition-colors duration-300">
-                    Read more
-                  </span>
-                  <div className="mt-1.5 h-px bg-gray-100">
-                    <div className="h-px bg-sage w-0 group-hover:w-full transition-all duration-500" />
+                  <p className="font-body text-xs text-gray-600 leading-relaxed line-clamp-3 flex-1">
+                    {post.excerpt}
+                  </p>
+
+                  <div className="mt-4">
+                    <span className="font-body text-xs tracking-[0.15em] uppercase text-gray-400 group-hover:text-sage transition-colors duration-300">
+                      Read more
+                    </span>
+                    <div className="mt-1.5 h-px bg-gray-100">
+                      <div className="h-px bg-sage w-0 group-hover:w-full transition-all duration-500" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Mobile view all */}
