@@ -19,8 +19,8 @@ const Navbar = () => {
       <div className="bg-sand w-full">
         <nav className="container mx-auto flex items-center justify-between h-16 md:h-24 px-6 overflow-visible">
 
-          {/* Mobile - Centered Logo */}
-          <div className="md:hidden absolute left-1/2 -translate-x-1/2 z-10">
+          {/* Mobile - Left Logo */}
+          <div className="md:hidden absolute left-6 z-10">
             <Link to="/">
               <img
                 src={logo}
