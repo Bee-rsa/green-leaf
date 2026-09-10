@@ -14,7 +14,7 @@ const Hero = () => {
 
       {/* Left - Image */}
       <div
-        className="relative w-full md:w-[58%] h-[68%] sm:h-[70%] md:h-full"
+        className="w-full md:w-[58%] h-[55%] sm:h-[58%] md:h-full"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(-100%)",
@@ -29,24 +29,11 @@ const Hero = () => {
             objectPosition: "center 5%",
           }}
         />
-
-        {/* Mobile Heading Over Image */}
-        <div className="md:hidden absolute bottom-12 left-6 right-6">
-          <h1
-            className="text-4xl sm:text-5xl text-white leading-tight"
-            style={{
-              fontFamily: "'EB Garamond', serif",
-              fontWeight: 400,
-            }}
-          >
-            A Better Way To Unwind.
-          </h1>
-        </div>
       </div>
 
       {/* Right - Content */}
       <div
-        className="w-full md:w-[42%] h-[32%] sm:h-[30%] md:h-full bg-sage flex items-center justify-center px-6 sm:px-10 md:px-16 py-8 md:py-0"
+        className="w-full md:w-[42%] h-[45%] sm:h-[42%] md:h-full bg-sage flex items-center justify-center px-6 sm:px-10 md:px-16 py-10 md:py-0"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(-100%)",
@@ -55,9 +42,8 @@ const Hero = () => {
       >
         <div className="max-w-md text-center md:text-left">
 
-          {/* Desktop Heading */}
           <h1
-            className="hidden md:block text-5xl lg:text-6xl text-white mb-6 leading-tight"
+            className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl text-white mb-5 md:mb-6 leading-tight"
             style={{
               fontFamily: "'EB Garamond', serif",
               fontWeight: 400,
@@ -67,7 +53,7 @@ const Hero = () => {
           </h1>
 
           <p
-            className="text-white/80 text-base md:text-lg mb-6 md:mb-10 leading-relaxed"
+            className="text-white/80 text-base sm:text-lg mb-8 md:mb-10 leading-relaxed"
             style={{
               fontFamily: "'Montserrat', sans-serif",
               fontWeight: 300,
@@ -96,4 +82,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
