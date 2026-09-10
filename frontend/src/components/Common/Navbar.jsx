@@ -17,7 +17,7 @@ const Navbar = () => {
   return (
     <>
       <div className="bg-sand w-full">
-        <nav className="container mx-auto flex items-center justify-between h-24 px-6 overflow-visible">
+        <nav className="container mx-auto flex items-center justify-between h-16 md:h-24 px-6 overflow-visible">
 
           {/* Mobile - Centered Logo */}
           <div className="md:hidden absolute left-1/2 -translate-x-1/2 z-10">
@@ -25,7 +25,7 @@ const Navbar = () => {
               <img
                 src={logo}
                 alt="Logo"
-                className="h-18 w-auto object-contain"
+                className="h-14 w-auto object-contain"
               />
             </Link>
           </div>
@@ -128,9 +128,8 @@ const Navbar = () => {
               className="flex items-center gap-3 text-gray-700 hover:text-black"
             >
               <HiOutlineUser className="h-6 w-6" />
-              <span
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
+
+              <span style={{ fontFamily: "'Montserrat', sans-serif" }}>
                 Profile
               </span>
             </Link>
