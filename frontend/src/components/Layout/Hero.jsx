@@ -46,7 +46,7 @@ const Hero = () => {
 
       {/* Right - Content */}
       <div
-        className="w-full md:w-[42%] h-[30%] sm:h-[27%] md:h-full bg-sage flex items-center justify-center px-6 sm:px-10 md:px-16 py-6 md:py-0"
+        className="w-full md:w-[42%] flex-1 md:flex-none md:h-full bg-sage flex items-center justify-center px-6 sm:px-10 md:px-16 py-6 md:py-0"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(-100%)",
@@ -96,4 +96,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
