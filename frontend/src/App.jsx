@@ -64,7 +64,7 @@ const App = () => {
             <Route path="order-confirmation" element={<OrderConfirmationPage />} />
             <Route path="order/:id" element={<OrderDetailsPage />} />
             <Route path="my-orders" element={<MyOrdersPage />} />
-            <Route path="shop" element={<ShopPage />} />
+            <Route path="our-space" element={<ShopPage />} />
             <Route path="experience" element={<ExperiencePage />} />
             <Route path="terms" element={<TermsPage />} />
             <Route path="privacy" element={<PrivacyPage />} />
