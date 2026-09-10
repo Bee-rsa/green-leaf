@@ -14,7 +14,7 @@ const Hero = () => {
 
       {/* Left - Image */}
       <div
-        className="relative w-full md:w-[58%] h-[45%] sm:h-[48%] md:h-full"
+        className="relative w-full md:w-[58%] h-[55%] sm:h-[58%] md:h-full"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(-100%)",
@@ -31,7 +31,7 @@ const Hero = () => {
         />
 
         {/* Mobile Heading - Centered Over Image */}
-        <div className="md:hidden absolute bottom-14 left-0 right-0 flex justify-center px-6">
+        <div className="md:hidden absolute bottom-8 left-0 right-0 flex justify-center px-4">
           <h1
             className="text-3xl sm:text-4xl text-white leading-none whitespace-nowrap"
             style={{
@@ -96,3 +96,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
