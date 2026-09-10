@@ -10,7 +10,7 @@ const Hero = () => {
   }, []); 
  
   return ( 
-    <section className="flex flex-col md:flex-row h-[680px] sm:h-[722.5px] md:h-[600px] overflow-hidden"> 
+    <section className="flex flex-col md:flex-row h-[660px] sm:h-[702.5px] md:h-[600px] overflow-hidden"> 
  
       {/* Left - Image */} 
       <div 
