@@ -27,20 +27,16 @@ const Home = () => {
   return (
     <div>
       <Hero />
+      
       <NewArrivals />
-      <FeaturesSection />
-      <GenderCollectionSection />
-      <PromotionalBanner page="Home" />
-      <FeaturedBlogs />
 
-      {products && products.length > 0 && (
-        <div className="container mx-auto">
-          <h2 className="text-xl text-center font-semibold mb-4">
-            Top Wears for Women
-          </h2>
-          <ProductGrid products={products} loading={loading} error={error} />
-        </div>
-      )}
+      <PromotionalBanner page="Home" />
+      
+      <FeaturesSection />
+
+      <GenderCollectionSection />
+
+      <FeaturedBlogs />
 
       <FeaturedCollection />
     </div>

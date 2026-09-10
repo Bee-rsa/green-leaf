@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPromotionsByPage } from "../../redux/slices/promotionsSlice";
-import heroImage from "../../assets/Hero2.jpg";
+import heroImage from "../../assets/Hero1.jpg";
 
 const PromotionalBanner = ({ page = "Home" }) => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const PromotionalBanner = ({ page = "Home" }) => {
 
       {/* Left — Promotions — only renders if there are promos */}
       {promos.length > 0 && (
-        <div className="w-full md:w-1/2 bg-white py-10 px-10 flex flex-col">
+        <div className="w-full md:w-1/2 bg-sand py-10 px-10 flex flex-col">
           <div className="mb-6">
             <p className="font-body text-xs tracking-[0.2em] text-gray-400 uppercase mb-2">
               Exclusive Offers
@@ -36,7 +36,7 @@ const PromotionalBanner = ({ page = "Home" }) => {
             {promos.map((promo) => (
               <div
                 key={promo._id}
-                className="overflow-hidden rounded-sm border border-gray-100 shadow-sm group h-32"
+                className="overflow-hidden shadow-sm group h-72"
               >
                 <img
                   src={promo.imageUrl}
