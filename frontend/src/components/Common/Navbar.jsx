@@ -12,11 +12,16 @@ import logo from "../../assets/1000602541-removebg-preview.png";
 
 const Navbar = () => {
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
   const { user } = useSelector((state) => state.auth);
 
   const toggleNavDrawer = () => {
     setNavDrawerOpen(!navDrawerOpen);
+  };
+
+  const toggleMobileSearch = () => {
+    setMobileSearchOpen(!mobileSearchOpen);
   };
 
   const handleTouchStart = (e) => {
@@ -29,7 +34,6 @@ const Navbar = () => {
     const touchEnd = e.changedTouches[0].clientX;
     const swipeDistance = touchEnd - touchStart;
 
-    // Strong swipe to the left closes the drawer
     if (swipeDistance < -100) {
       setNavDrawerOpen(false);
     }
@@ -85,6 +89,8 @@ const Navbar = () => {
 
           {/* Desktop Right Icons */}
           <div className="hidden md:flex items-center space-x-4">
+
+            {/* Admin */}
             {user && user.role === "admin" && (
               <Link
                 to="/admin"
@@ -95,10 +101,14 @@ const Navbar = () => {
               </Link>
             )}
 
-            <Link to="/profile" className="hover:text-black">
-              <HiOutlineUser className="h-6 w-6 text-gray-700" />
-            </Link>
+            {/* Profile - Only when NOT logged in */}
+            {!user && (
+              <Link to="/profile" className="hover:text-black">
+                <HiOutlineUser className="h-6 w-6 text-gray-700" />
+              </Link>
+            )}
 
+            {/* Desktop SearchBar */}
             <div className="overflow-hidden">
               <SearchBar />
             </div>
@@ -106,16 +116,22 @@ const Navbar = () => {
 
           {/* Mobile - Search + Menu */}
           <div className="md:hidden ml-auto z-20 flex items-center gap-4">
-            <button>
-              <HiOutlineMagnifyingGlass className="h-6 w-6 text-gray-700" />
-            </button>
 
+            {/* Search */}
+            <div className="overflow-hidden">
+              <SearchBar />
+            </div>
+          
+
+            {/* Menu */}
             <button onClick={toggleNavDrawer}>
               <HiBars3BottomRight className="h-6 w-6 text-gray-700" />
             </button>
+
           </div>
 
         </nav>
+
       </div>
 
       {/* Mobile Navigation Drawer */}
