@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { GiMeditation } from "react-icons/gi";
+import { IoPeopleOutline } from "react-icons/io5";
+import { BiBrush } from "react-icons/bi";
+import { BsMoonStars } from "react-icons/bs";
 import heroImg from "../../assets/Hero3.jpg";
 
 const Hero = () => {
@@ -65,6 +69,14 @@ const Hero = () => {
           >
             A Better Way To Unwind.
           </h1>
+
+          {/* Icons */}
+          <div className="flex items-center justify-center md:justify-start gap-6 mb-5 text-white">
+            <GiMeditation className="w-7 h-7" />
+            <IoPeopleOutline className="w-7 h-7" />
+            <BiBrush className="w-7 h-7" />
+            <BsMoonStars className="w-6 h-6" />
+          </div>
 
           <p
             className="text-white/80 text-base md:text-lg mb-6 md:mb-10 leading-relaxed"
