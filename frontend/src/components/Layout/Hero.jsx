@@ -14,11 +14,11 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="flex flex-col md:flex-row h-[800px] sm:h-[850px] md:h-[600px] overflow-hidden">
+    <section className="flex flex-col md:flex-row h-[740px] sm:h-[793px] md:h-[600px] overflow-hidden">
 
       {/* Left - Image */}
       <div
-        className="relative w-full md:w-[58%] h-[55%] sm:h-[58%] md:h-full"
+        className="relative w-full md:w-[58%] h-[440px] sm:h-[493px] md:h-full flex-shrink-0"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(-100%)",
@@ -50,7 +50,7 @@ const Hero = () => {
 
       {/* Right - Content */}
       <div
-        className="w-full md:w-[42%] flex-1 md:flex-none md:h-full bg-sage flex items-center justify-center px-6 sm:px-10 md:px-16 py-6 md:py-0"
+        className="w-full md:w-[42%] h-[300px] sm:h-[300px] md:h-full flex-shrink-0 bg-sage flex items-center justify-center px-6 sm:px-10 md:px-16 py-6 md:py-0"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(-100%)",
@@ -70,8 +70,8 @@ const Hero = () => {
             A Better Way To Unwind.
           </h1>
 
-          {/* Icons */}
-          <div className="flex items-center justify-center md:justify-start gap-6 mb-5 text-white">
+          {/* Mobile Icons */}
+          <div className="md:hidden flex items-center justify-center gap-6 mb-5 text-white">
             <GiMeditation className="w-7 h-7" />
             <IoPeopleOutline className="w-7 h-7" />
             <BiBrush className="w-7 h-7" />
