@@ -1,5 +1,3 @@
-// src/pages/JournalPostPage.jsx
-
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
@@ -9,7 +7,10 @@ const JournalPostPage = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { currentBlog: blog, loading } = useSelector((state) => state.blogs);
+
+  const { currentBlog: blog, loading } = useSelector(
+    (state) => state.blogs
+  );
 
   useEffect(() => {
     dispatch(fetchBlogBySlug(slug));
@@ -17,8 +18,10 @@ const JournalPostPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <p className="font-body text-xs tracking-widest uppercase text-gray-300">Loading...</p>
+      <div className="min-h-screen bg-[#F8F7F3] flex items-center justify-center">
+        <p className="font-body text-[10px] tracking-[0.3em] uppercase text-gray-400">
+          Loading Journal
+        </p>
       </div>
     );
   }
@@ -26,110 +29,215 @@ const JournalPostPage = () => {
   if (!blog) return null;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F8F7F3] text-gray-800">
 
-      {/* Header */}
-      <div className="bg-sand px-8 lg:px-16 pt-16 pb-14">
-        <div className="max-w-3xl mx-auto">
+      {/* HEADER */}
+      <header className="px-5 sm:px-8 lg:px-16 pt-10 sm:pt-14 lg:pt-20 pb-10">
+        <div className="max-w-4xl mx-auto">
+
+          {/* BACK */}
           <button
             onClick={() => navigate("/journal")}
-            className="font-body text-xs tracking-widest uppercase text-gray-400 hover:text-gray-600 transition-colors mb-8 block"
+            className="group inline-flex items-center gap-2 font-body text-[10px] tracking-[0.2em] uppercase text-gray-400 hover:text-gray-700 transition-colors mb-12"
           >
-            ← Back to Journal
+            <span className="group-hover:-translate-x-1 transition-transform duration-300">
+              ←
+            </span>
+            Back to Journal
           </button>
-          <p className="font-body text-xs tracking-widest uppercase text-gray-400 mb-4">
-            {blog.category}
-          </p>
-          <h1 className="font-heading text-5xl md:text-6xl text-gray-800 leading-tight mb-6">
+
+          {/* CATEGORY */}
+          <div className="flex items-center gap-3 mb-6">
+
+            <span className="font-body text-[10px] tracking-[0.2em] uppercase text-sage">
+              {blog.category}
+            </span>
+
+            <span className="w-1 h-1 rounded-full bg-gray-300" />
+
+            <span className="font-body text-[10px] tracking-[0.15em] uppercase text-gray-400">
+              {blog.readTime} min read
+            </span>
+
+          </div>
+
+          {/* TITLE */}
+          <h1 className="font-heading text-[2.8rem] sm:text-5xl lg:text-6xl text-gray-800 leading-[1.02] max-w-4xl">
             {blog.title}
           </h1>
-          <div className="w-10 h-px bg-wood mb-6" />
+
+          {/* DIVIDER */}
+          <div className="w-10 h-px bg-sage mt-8 mb-6" />
+
+          {/* AUTHOR / DATE */}
           <p className="font-body text-xs text-gray-400">
-            By {blog.author} · {blog.date} · {blog.readTime} min read
+            By {blog.author} · {blog.date}
           </p>
+
         </div>
-      </div>
+      </header>
 
-      {/* Content */}
-      <div className="max-w-3xl mx-auto px-8 lg:px-0 py-14 space-y-8">
+      {/* ARTICLE */}
+      <main className="px-5 sm:px-8 pb-20 sm:pb-28 lg:pb-32">
 
-        {blog.excerpt && (
-          <p className="font-subheading text-2xl italic text-gray-500 leading-relaxed border-l-2 border-wood pl-6">
-            {blog.excerpt}
-          </p>
-        )}
+        <article className="max-w-3xl mx-auto">
 
-        {blog.blocks.map((block) => (
-          <div key={block.id}>
-            {block.type === "heading" && (
-              <h2 className="font-heading text-3xl text-gray-800 leading-snug">
-                {block.content}
-              </h2>
-            )}
-            {block.type === "paragraph" && (
-              <div>
-                {block.label && (
-                  <p className="font-body text-xs tracking-widest uppercase text-gray-300 mb-3">
-                    {block.label}
-                  </p>
-                )}
-                <p className="font-body text-base text-gray-600 leading-relaxed">
-                  {block.content}
-                </p>
-              </div>
-            )}
-            {block.type === "quote" && (
-              <blockquote className="border-l-2 border-wood pl-6 py-2">
-                <p className="font-subheading text-2xl italic text-gray-500 leading-relaxed">
-                  {block.content}
-                </p>
-              </blockquote>
-            )}
-            {block.type === "takeaway" && (
-              <div className="bg-sage/5 border border-sage/20 rounded-sm px-6 py-5">
-                <p className="font-body text-xs tracking-widest uppercase text-sage mb-2">
-                  Key Takeaway
-                </p>
-                <p className="font-body text-sm text-gray-600 leading-relaxed">
-                  {block.content}
-                </p>
-              </div>
-            )}
-            {block.type === "image" && block.imageUrl && (
-              <div>
-                <img
-                  src={block.imageUrl}
-                  alt={block.caption || ""}
-                  className="w-full rounded-sm object-cover"
-                />
-                {block.caption && (
-                  <p className="font-body text-xs italic text-gray-400 mt-2 text-center">
-                    {block.caption}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
+          {/* EXCERPT */}
+          {blog.excerpt && (
+            <div className="mb-12 sm:mb-16">
 
-        {/* References */}
-        {blog.references && (
-          <div className="pt-8 border-t border-gray-100">
-            <p className="font-body text-xs tracking-widest uppercase text-gray-400 mb-4">
-              References
-            </p>
-            {blog.references.split("\n").filter(Boolean).map((ref, i) => (
-              <p key={i} className="font-body text-xs text-gray-400 mb-1">
-                {ref.startsWith("http") ? (
-                  <a href={ref} target="_blank" rel="noopener noreferrer" className="text-sage hover:underline">
-                    {ref}
-                  </a>
-                ) : ref}
+              <p className="font-heading text-xl sm:text-2xl italic text-gray-500 leading-relaxed">
+                {blog.excerpt}
               </p>
+
+            </div>
+          )}
+
+          {/* CONTENT */}
+          <div className="space-y-10">
+
+            {blog.blocks.map((block) => (
+
+              <div key={block.id}>
+
+                {/* HEADING */}
+                {block.type === "heading" && (
+                  <h2 className="font-heading text-2xl sm:text-3xl text-gray-800 leading-tight pt-5">
+                    {block.content}
+                  </h2>
+                )}
+
+                {/* PARAGRAPH */}
+                {block.type === "paragraph" && (
+                  <div>
+
+                    {block.label && (
+                      <p className="font-body text-[10px] tracking-[0.22em] uppercase text-gray-400 mb-4">
+                        {block.label}
+                      </p>
+                    )}
+
+                    <p className="font-body text-[15px] sm:text-base text-gray-600 leading-[1.9] font-light">
+                      {block.content}
+                    </p>
+
+                  </div>
+                )}
+
+                {/* QUOTE */}
+                {block.type === "quote" && (
+                  <blockquote className="my-12 pl-6 sm:pl-8 border-l border-sage">
+
+                    <p className="font-heading text-xl sm:text-2xl italic text-gray-500 leading-relaxed">
+                      {block.content}
+                    </p>
+
+                  </blockquote>
+                )}
+
+                {/* TAKEAWAY */}
+                {block.type === "takeaway" && (
+                  <div className="my-12 bg-[#EFEEE8] px-6 sm:px-8 py-7 sm:py-8">
+
+                    <p className="font-body text-[10px] tracking-[0.22em] uppercase text-sage mb-3">
+                      Key Takeaway
+                    </p>
+
+                    <p className="font-body text-sm sm:text-[15px] text-gray-600 leading-7 font-light">
+                      {block.content}
+                    </p>
+
+                  </div>
+                )}
+
+                {/* IMAGE */}
+                {block.type === "image" && block.imageUrl && (
+                  <figure className="my-12 sm:my-16">
+
+                    <div className="flex justify-center">
+
+                      <img
+                        src={block.imageUrl}
+                        alt={block.caption || blog.title}
+                        className="w-full max-w-2xl max-h-[420px] object-cover"
+                      />
+
+                    </div>
+
+                    {block.caption && (
+                      <figcaption className="font-body text-[10px] sm:text-xs italic text-gray-400 mt-3 text-center">
+                        {block.caption}
+                      </figcaption>
+                    )}
+
+                  </figure>
+                )}
+
+              </div>
+
             ))}
+
           </div>
-        )}
-      </div>
+
+          {/* REFERENCES */}
+          {blog.references && (
+            <div className="mt-16 pt-8 border-t border-gray-200">
+
+              <p className="font-body text-[10px] tracking-[0.22em] uppercase text-gray-400 mb-5">
+                References
+              </p>
+
+              <div className="space-y-2">
+
+                {blog.references
+                  .split("\n")
+                  .filter(Boolean)
+                  .map((ref, i) => (
+                    <p
+                      key={i}
+                      className="font-body text-xs text-gray-400 leading-relaxed"
+                    >
+                      {ref.startsWith("http") ? (
+                        <a
+                          href={ref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sage hover:text-gray-700 transition-colors break-all"
+                        >
+                          {ref}
+                        </a>
+                      ) : (
+                        ref
+                      )}
+                    </p>
+                  ))}
+
+              </div>
+
+            </div>
+          )}
+
+          {/* BACK TO JOURNAL */}
+          <div className="mt-16 pt-8 border-t border-gray-200">
+
+            <button
+              onClick={() => navigate("/journal")}
+              className="group inline-flex items-center gap-3 font-body text-[10px] tracking-[0.2em] uppercase text-gray-400 hover:text-gray-700 transition-colors"
+            >
+              <span className="group-hover:-translate-x-1 transition-transform duration-300">
+                ←
+              </span>
+
+              Back to Journal
+
+            </button>
+
+          </div>
+
+        </article>
+
+      </main>
+
     </div>
   );
 };
