@@ -4,7 +4,7 @@ import { GiMeditation } from "react-icons/gi";
 import { IoPeopleOutline } from "react-icons/io5";
 import { BiBrush } from "react-icons/bi";
 import { BsMoonStars } from "react-icons/bs";
-import heroImg from "../../assets/Hero3.jpg";
+import heroImg from "../../assets/Hero4.jpg";
 
 const Hero = () => {
   const [visible, setVisible] = useState(false);
