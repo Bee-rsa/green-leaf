@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../assets/logo1.png";
+import heroImage from "../../assets/Hero3.webp";
 
 const AgeGate = ({ onConfirm }) => {
   const [declined, setDeclined] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = heroImage;
+  }, []);
 
   if (declined) {
     return (
@@ -14,6 +20,7 @@ const AgeGate = ({ onConfirm }) => {
           >
             We're sorry.
           </p>
+
           <p
             className="text-white/80 text-sm leading-relaxed"
             style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
@@ -29,6 +36,7 @@ const AgeGate = ({ onConfirm }) => {
   return (
     <div className="fixed inset-0 bg-sage flex items-center justify-center z-[9999] px-6">
       <div className="text-center max-w-md w-full">
+
         {/* Logo */}
         <div className="flex justify-center mb-8">
           <img
@@ -41,14 +49,20 @@ const AgeGate = ({ onConfirm }) => {
         {/* Heading */}
         <h1
           className="text-4xl md:text-5xl text-white mb-4 leading-tight"
-          style={{ fontFamily: "'EB Garamond', serif", fontWeight: 400 }}
+          style={{
+            fontFamily: "'EB Garamond', serif",
+            fontWeight: 400,
+          }}
         >
           Are you 18 or older?
         </h1>
 
         <p
           className="text-white/70 text-sm mb-10 leading-relaxed"
-          style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontWeight: 300,
+          }}
         >
           Green Leaf is a cannabis retailer. You must be 18 years or older to
           enter this site. Please confirm your age to continue.
@@ -59,14 +73,21 @@ const AgeGate = ({ onConfirm }) => {
           <button
             onClick={onConfirm}
             className="px-10 py-3 bg-white text-sage text-sm tracking-widest hover:bg-white/90 transition-colors duration-300"
-            style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              fontWeight: 500,
+            }}
           >
             Yes, I am 18+
           </button>
+
           <button
             onClick={() => setDeclined(true)}
             className="px-10 py-3 border border-white/50 text-white text-sm tracking-widest hover:border-white transition-colors duration-300"
-            style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              fontWeight: 500,
+            }}
           >
             No, I am not
           </button>
@@ -77,8 +98,8 @@ const AgeGate = ({ onConfirm }) => {
           className="text-white/40 text-xs mt-10 leading-relaxed"
           style={{ fontFamily: "'Montserrat', sans-serif" }}
         >
-          By entering this site you agree to our terms and conditions. This site
-          uses cookies to improve your experience.
+          By entering this site you agree to our terms and conditions. This
+          site uses cookies to improve your experience.
         </p>
       </div>
     </div>
