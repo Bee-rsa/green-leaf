@@ -5,7 +5,7 @@ import {
   IoLogoWhatsapp,
 } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import logo from "../../assets/1000602541-removebg-preview.png";
+import logo from "../../assets/logo1.png";
 
 const Footer = () => {
   return (
@@ -87,7 +87,7 @@ const Footer = () => {
             </Link>
 
             <Link
-              to="/contact"
+              to="/experience"
               className="text-sm text-gray-600 hover:text-sage transition-colors"
               style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
             >

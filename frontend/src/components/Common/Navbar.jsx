@@ -8,7 +8,7 @@ import SearchBar from "./SearchBar";
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useSelector } from "react-redux";
-import logo from "../../assets/1000602541-removebg-preview.png";
+import logo from "../../assets/logo1.png";
 
 const Navbar = () => {
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
@@ -44,7 +44,7 @@ const Navbar = () => {
   return (
     <>
       <div className="bg-sand w-full">
-        <nav className="container mx-auto flex items-center justify-between h-16 md:h-24 px-6 overflow-visible">
+        <nav className="container mx-auto flex items-center justify-between h-20 md:h-24 px-6 overflow-visible">
 
           {/* Mobile - Left Logo */}
           <div className="md:hidden absolute left-2 z-10">
@@ -52,18 +52,18 @@ const Navbar = () => {
               <img
                 src={logo}
                 alt="Logo"
-                className="h-14 w-auto object-contain"
+                className="h-16 w-auto object-contain"
               />
             </Link>
           </div>
 
           {/* Desktop - Logo */}
-          <div className="hidden md:block relative w-32">
+          <div className="hidden md:block relative w-44">
             <Link to="/">
               <img
                 src={logo}
                 alt="Logo"
-                className="absolute -translate-y-1/2 top-1/2 h-56 w-auto object-contain"
+                className="absolute -translate-y-1/2 top-1/2 h-32 w-auto object-contain"
               />
             </Link>
           </div>

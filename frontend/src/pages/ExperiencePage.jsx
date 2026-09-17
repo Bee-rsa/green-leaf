@@ -85,10 +85,10 @@ const ExperiencePage = () => {
                     </p>
 
                     <a
-                      href="mailto:hello@greenleaf.co.za"
+                      href="mailto:greenleaf.management@gmail.com"
                       className="font-body text-sm text-gray-600 hover:text-sage transition-colors"
                     >
-                      hello@greenleaf.co.za
+                      greenleaf.management@gmail.com
                     </a>
                   </div>
 
@@ -100,10 +100,10 @@ const ExperiencePage = () => {
                     </p>
 
                     <a
-                      href="tel:+27000000000"
+                      href="tel:+27326480083"
                       className="font-body text-sm text-gray-600 hover:text-sage transition-colors"
                     >
-                      +27 00 000 0000
+                      032 648 0083
                     </a>
                   </div>
 

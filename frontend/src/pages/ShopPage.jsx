@@ -2,9 +2,9 @@ import NewArrivals from "../components/Products/NewArrivals";
 import { useNavigate } from "react-router-dom";
 
 // Images
-import GreenLeaf1 from "../assets/Hero2.jpg";
-import GreenLeaf2 from "../assets/Hero2.jpg";
-import GreenLeaf3 from "../assets/Hero2.jpg";
+import GreenLeaf1 from "../assets/store1.avif";
+import GreenLeaf2 from "../assets/store2.avif";
+import GreenLeaf3 from "../assets/store3.avif";
 
 const ShopPage = () => {
 const navigate = useNavigate();
