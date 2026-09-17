@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../../assets/1000602541-removebg-preview.png";
+import logo from "../../assets/logo1.png";
 
 const AgeGate = ({ onConfirm }) => {
   const [declined, setDeclined] = useState(false);

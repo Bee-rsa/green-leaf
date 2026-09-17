@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../redux/slices/authSlice";
 import { clearCart } from "../../redux/slices/cartSlice";
-import logo from "../../assets/1000602541-removebg-preview.png";
+import logo from "../../assets/logo1.png";
 
 const INACTIVITY_LIMIT = 30 * 60 * 1000;
 
