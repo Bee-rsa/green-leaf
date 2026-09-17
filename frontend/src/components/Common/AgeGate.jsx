@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import logo from "../../assets/logo1.png";
-import heroImage from "../../assets/Hero3.webp";
+import heroImage from "../../assets/logo1.webp";
 
 const AgeGate = ({ onConfirm }) => {
   const [declined, setDeclined] = useState(false);
