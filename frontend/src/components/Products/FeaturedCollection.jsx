@@ -29,7 +29,7 @@ const faqs = [
   {
     question: "Where are you located and what are your hours?",
     answer:
-      "We are located in Salt Rock, KwaZulu-Natal. Our trading hours are Monday to Saturday 9am – 6pm and Sunday 10am – 4pm. You can find us via the Google Maps link on our contact page.",
+      "We are located in Salt Rock, KwaZulu-Natal. Our trading hours are Monday to Saturday 08:30am – 18:00pm, Sunday's and public holidays are from 9:00am – 17:00pm. You can find us via the Google Maps link on our contact page.",
   },
   {
     question: "Can I order online or get delivery?",

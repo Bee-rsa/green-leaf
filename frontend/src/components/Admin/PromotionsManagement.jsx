@@ -11,7 +11,7 @@ import {
   deletePromotion,
 } from "../../redux/slices/promotionsSlice";
 
-const PAGES = ["Home", "Shop", "Products"];
+const PAGES = ["Home", "Shop"];
 
 const PromotionsManagement = () => {
   const dispatch = useDispatch();

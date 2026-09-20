@@ -243,36 +243,41 @@ style={{ fontFamily: "'Montserrat', sans-serif" }}
 
                 <div className="flex justify-between max-w-xs">
                   <span>Monday</span>
-                  <span>08:00 – 18:00</span>
+                  <span>08:30 – 18:00</span>
                 </div>
 
                 <div className="flex justify-between max-w-xs">
                   <span>Tuesday</span>
-                  <span>08:00 – 18:00</span>
+                  <span>08:30 – 18:00</span>
                 </div>
 
                 <div className="flex justify-between max-w-xs">
                   <span>Wednesday</span>
-                  <span>08:00 – 18:00</span>
+                  <span>08:30 – 18:00</span>
                 </div>
 
                 <div className="flex justify-between max-w-xs">
                   <span>Thursday</span>
-                  <span>08:00 – 18:00</span>
+                  <span>08:30 – 18:00</span>
                 </div>
 
                 <div className="flex justify-between max-w-xs">
                   <span>Friday</span>
-                  <span>08:00 – 18:00</span>
+                  <span>08:30 – 18:00</span>
                 </div>
 
                 <div className="flex justify-between max-w-xs">
                   <span>Saturday</span>
-                  <span>08:00 – 17:00</span>
+                  <span>08:30 – 18:00</span>
                 </div>
 
                 <div className="flex justify-between max-w-xs">
                   <span>Sunday</span>
+                  <span>09:00 – 17:00</span>
+                </div>
+
+                <div className="flex justify-between max-w-xs">
+                  <span>Public Holidays</span>
                   <span>09:00 – 17:00</span>
                 </div>
 

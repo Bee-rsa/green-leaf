@@ -7,6 +7,7 @@ import ProductGrid from "../components/Products/ProductGrid";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductsByFilters } from "../redux/slices/productsSlice";
+import { fetchPromotionsByPage } from "../redux/slices/promotionsSlice";
 
 const CollectionPage = () => {
   const { collection } = useParams();
@@ -17,9 +18,14 @@ const CollectionPage = () => {
     (state) => state.products
   );
 
+  const { pagePromos } = useSelector(
+    (state) => state.promotions
+  );
+
   const sidebarRef = useRef(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  // Fetch products
   useEffect(() => {
     const queryParams = Object.fromEntries([...searchParams]);
 
@@ -31,6 +37,12 @@ const CollectionPage = () => {
     );
   }, [dispatch, collection, searchParams]);
 
+  // Fetch promotional banners assigned to the Shop page
+  useEffect(() => {
+    dispatch(fetchPromotionsByPage("Shop"));
+  }, [dispatch]);
+
+  // Close mobile sidebar when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -48,12 +60,20 @@ const CollectionPage = () => {
     };
   }, []);
 
-  const safeProducts = Array.isArray(products) ? products : [];
+  const safeProducts = Array.isArray(products)
+    ? products
+    : [];
+
+  const safePromotions = Array.isArray(pagePromos)
+    ? pagePromos.filter((promo) => promo?.imageUrl)
+    : [];
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen mt-20">
 
-      {/* MOBILE HEADER */}
+      {/* =========================
+          MOBILE HEADER
+      ========================== */}
       <div className="lg:hidden flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
 
         <h2
@@ -82,13 +102,17 @@ const CollectionPage = () => {
       </div>
 
 
-      {/* MOBILE OVERLAY */}
+      {/* =========================
+          MOBILE OVERLAY
+      ========================== */}
       {isSidebarOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-30 z-40 lg:hidden" />
       )}
 
 
-      {/* SIDEBAR */}
+      {/* =========================
+          SIDEBAR
+      ========================== */}
       <div
         ref={sidebarRef}
         className={`fixed inset-y-0 left-0 z-50 w-72 bg-white shadow-xl overflow-y-auto transition-transform duration-300 lg:static lg:translate-x-0 lg:shadow-none lg:w-64 lg:border-r lg:border-gray-100 ${
@@ -110,7 +134,9 @@ const CollectionPage = () => {
             Filters
           </span>
 
-          <button onClick={() => setIsSidebarOpen(false)}>
+          <button
+            onClick={() => setIsSidebarOpen(false)}
+          >
             <IoMdClose className="h-5 w-5 text-gray-500" />
           </button>
 
@@ -121,10 +147,14 @@ const CollectionPage = () => {
       </div>
 
 
-      {/* MAIN */}
+      {/* =========================
+          MAIN CONTENT
+      ========================== */}
       <div className="flex-grow p-4 lg:p-10 lg:-mt-16">
 
-        {/* DESKTOP HEADER */}
+        {/* =========================
+            DESKTOP HEADER
+        ========================== */}
         <div className="hidden lg:flex items-end justify-between mb-10">
 
           <div>
@@ -168,7 +198,9 @@ const CollectionPage = () => {
         </div>
 
 
-        {/* MOBILE SORT */}
+        {/* =========================
+            MOBILE SORT
+        ========================== */}
         <div className="lg:hidden -mt-1 mb-4">
 
           <SortOptions />
@@ -176,7 +208,9 @@ const CollectionPage = () => {
         </div>
 
 
-        {/* EMPTY STATE */}
+        {/* =========================
+            EMPTY STATE
+        ========================== */}
         {!loading &&
           !error &&
           safeProducts.length === 0 && (
@@ -205,11 +239,14 @@ const CollectionPage = () => {
           )}
 
 
-        {/* PRODUCTS */}
+        {/* =========================
+            PRODUCTS + PROMOTIONS
+        ========================== */}
         <ProductGrid
           products={safeProducts}
           loading={loading}
           error={error}
+          promotions={safePromotions}
         />
 
       </div>
@@ -219,4 +256,3 @@ const CollectionPage = () => {
 };
 
 export default CollectionPage;
-

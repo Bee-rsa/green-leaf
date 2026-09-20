@@ -6,6 +6,7 @@ import {
   fetchProductDetails,
   fetchSimilarProducts,
 } from "../../redux/slices/productsSlice";
+import { trackProductView } from "../../utils/analytics";
 
 const ProductDetails = ({ productId }) => {
   const { id } = useParams();
@@ -25,6 +26,18 @@ const ProductDetails = ({ productId }) => {
       dispatch(fetchSimilarProducts({ id: productFetchId }));
     }
   }, [dispatch, productFetchId]);
+
+  // ---------------------------------------------
+  // ANALYTICS - TRACK PRODUCT VIEW
+  // ---------------------------------------------
+  useEffect(() => {
+    if (selectedProduct?._id || selectedProduct?.id) {
+      trackProductView({
+        id: selectedProduct._id || selectedProduct.id,
+        name: selectedProduct.name,
+      });
+    }
+  }, [selectedProduct]);
 
   useEffect(() => {
     if (selectedProduct?.images?.length > 0) {
@@ -129,18 +142,12 @@ const ProductDetails = ({ productId }) => {
   return (
     <div className="min-h-screen bg-sand px-4 py-8 md:px-6 md:py-12">
       <div className="max-w-7xl mx-auto">
-
         {/* Product */}
         <div className="bg-white">
-
           <div className="grid grid-cols-1 lg:grid-cols-2">
 
-            {/* =====================================================
-                LEFT - PRODUCT IMAGES
-            ====================================================== */}
+            {/* LEFT - PRODUCT IMAGES */}
             <div className="p-4 md:p-8">
-
-              {/* Main Image */}
               <div className="aspect-square bg-gray-50 overflow-hidden">
                 {mainImage && (
                   <img
@@ -151,7 +158,6 @@ const ProductDetails = ({ productId }) => {
                 )}
               </div>
 
-              {/* Thumbnails */}
               {images.length > 1 && (
                 <div className="mt-4 flex gap-3 overflow-x-auto pb-2">
                   {images.map((image, index) => (
@@ -176,12 +182,8 @@ const ProductDetails = ({ productId }) => {
               )}
             </div>
 
-            {/* =====================================================
-                RIGHT - PRODUCT INFORMATION
-            ====================================================== */}
+            {/* RIGHT - PRODUCT INFORMATION */}
             <div className="p-6 md:p-10 lg:p-12">
-
-              {/* Category */}
               {category && (
                 <p
                   className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-4"
@@ -191,7 +193,6 @@ const ProductDetails = ({ productId }) => {
                 </p>
               )}
 
-              {/* Product Name */}
               <h1
                 className="text-4xl md:text-5xl text-black leading-tight mb-5"
                 style={{ fontFamily: "'EB Garamond', serif" }}
@@ -199,7 +200,6 @@ const ProductDetails = ({ productId }) => {
                 {name}
               </h1>
 
-              {/* Rating */}
               {rating > 0 && (
                 <div className="flex items-center gap-2 mb-5">
                   <div className="flex gap-1">
@@ -227,9 +227,7 @@ const ProductDetails = ({ productId }) => {
                 </div>
               )}
 
-              {/* Price */}
               <div className="flex items-center gap-3 mb-6">
-
                 {hasDiscount ? (
                   <>
                     <span
@@ -256,7 +254,6 @@ const ProductDetails = ({ productId }) => {
                 )}
               </div>
 
-              {/* Description */}
               {description && (
                 <div className="border-t border-gray-200 pt-6 mb-8">
                   <p
@@ -268,7 +265,6 @@ const ProductDetails = ({ productId }) => {
                 </div>
               )}
 
-              {/* Stock */}
               <div className="mb-8">
                 {countInStock > 0 ? (
                   <p
@@ -288,7 +284,6 @@ const ProductDetails = ({ productId }) => {
                 )}
               </div>
 
-              {/* Sizes */}
               {hasSizes && (
                 <div className="mb-8">
                   <h3
@@ -312,7 +307,6 @@ const ProductDetails = ({ productId }) => {
                 </div>
               )}
 
-              {/* Colours */}
               {hasColors && (
                 <div className="mb-8">
                   <h3
@@ -349,11 +343,8 @@ const ProductDetails = ({ productId }) => {
                 </div>
               )}
 
-              {/* =====================================================
-                  PRODUCT DETAILS
-              ====================================================== */}
+              {/* PRODUCT DETAILS */}
               <div className="border-t border-gray-200 pt-8">
-
                 <h2
                   className="text-2xl text-black mb-6"
                   style={{ fontFamily: "'EB Garamond', serif" }}
@@ -365,7 +356,6 @@ const ProductDetails = ({ productId }) => {
                   className="divide-y divide-gray-200"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
-
                   {brand && (
                     <div className="flex justify-between gap-6 py-3">
                       <span className="text-sm text-gray-500">Brand</span>
@@ -438,16 +428,12 @@ const ProductDetails = ({ productId }) => {
                       </span>
                     </div>
                   )}
-
                 </div>
               </div>
 
-              {/* =====================================================
-                  CUSTOM OPTIONS / FIELDS
-              ====================================================== */}
+              {/* CUSTOM FIELDS */}
               {customFieldEntries.length > 0 && (
                 <div className="border-t border-gray-200 pt-8 mt-8">
-
                   <h2
                     className="text-2xl text-black mb-6"
                     style={{ fontFamily: "'EB Garamond', serif" }}
@@ -477,10 +463,9 @@ const ProductDetails = ({ productId }) => {
                 </div>
               )}
 
-              {/* Tags */}
+              {/* TAGS */}
               {hasTags && (
                 <div className="border-t border-gray-200 pt-8 mt-8">
-
                   <h2
                     className="text-2xl text-black mb-4"
                     style={{ fontFamily: "'EB Garamond', serif" }}
@@ -503,17 +488,13 @@ const ProductDetails = ({ productId }) => {
                   </div>
                 </div>
               )}
-
             </div>
           </div>
         </div>
 
-        {/* =====================================================
-            SIMILAR PRODUCTS
-        ====================================================== */}
+        {/* SIMILAR PRODUCTS */}
         {similarProducts?.length > 0 && (
           <div className="mt-20">
-
             <div className="text-center mb-10">
               <p
                 className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3"
@@ -537,7 +518,6 @@ const ProductDetails = ({ productId }) => {
             />
           </div>
         )}
-
       </div>
     </div>
   );

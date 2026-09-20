@@ -1,11 +1,60 @@
 import { useState } from "react";
+import axios from "axios";
 
 const ExperiencePage = () => {
-  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
 
-  const handleSubmit = (e) => {
+  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+
+    setSubmitting(true);
+    setSubmitted(false);
+    setError("");
+
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/contact`,
+        formData
+      );
+
+      setSubmitted(true);
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Contact form error:", error);
+
+      setError(
+        error.response?.data?.message ||
+          "Unable to send your message right now. Please try again."
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -168,7 +217,10 @@ const ExperiencePage = () => {
                     </p>
 
                     <button
-                      onClick={() => setSubmitted(false)}
+                      onClick={() => {
+                        setSubmitted(false);
+                        setError("");
+                      }}
                       className="mt-7 font-body text-[10px] tracking-[0.2em] uppercase text-gray-400 hover:text-gray-700 transition-colors"
                     >
                       Send another message
@@ -189,8 +241,12 @@ const ExperiencePage = () => {
 
                       <input
                         type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
                         required
-                        className="w-full bg-transparent border-0 border-b border-gray-300 px-0 py-3 font-body text-sm text-gray-700 placeholder:text-gray-300 focus:border-sage focus:ring-0 outline-none transition-colors"
+                        disabled={submitting}
+                        className="w-full bg-transparent border-0 border-b border-gray-300 px-0 py-3 font-body text-sm text-gray-700 placeholder:text-gray-300 focus:border-sage focus:ring-0 outline-none transition-colors disabled:opacity-50"
                         placeholder="Your name"
                       />
                     </div>
@@ -204,8 +260,12 @@ const ExperiencePage = () => {
 
                       <input
                         type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
                         required
-                        className="w-full bg-transparent border-0 border-b border-gray-300 px-0 py-3 font-body text-sm text-gray-700 placeholder:text-gray-300 focus:border-sage focus:ring-0 outline-none transition-colors"
+                        disabled={submitting}
+                        className="w-full bg-transparent border-0 border-b border-gray-300 px-0 py-3 font-body text-sm text-gray-700 placeholder:text-gray-300 focus:border-sage focus:ring-0 outline-none transition-colors disabled:opacity-50"
                         placeholder="you@example.com"
                       />
                     </div>
@@ -219,7 +279,11 @@ const ExperiencePage = () => {
 
                       <input
                         type="tel"
-                        className="w-full bg-transparent border-0 border-b border-gray-300 px-0 py-3 font-body text-sm text-gray-700 placeholder:text-gray-300 focus:border-sage focus:ring-0 outline-none transition-colors"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        disabled={submitting}
+                        className="w-full bg-transparent border-0 border-b border-gray-300 px-0 py-3 font-body text-sm text-gray-700 placeholder:text-gray-300 focus:border-sage focus:ring-0 outline-none transition-colors disabled:opacity-50"
                         placeholder="+27"
                       />
                     </div>
@@ -232,18 +296,32 @@ const ExperiencePage = () => {
                       </label>
 
                       <select
-                        defaultValue=""
-                        className="w-full bg-transparent border-0 border-b border-gray-300 px-0 py-3 font-body text-sm text-gray-600 focus:border-sage focus:ring-0 outline-none transition-colors"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                        required
+                        disabled={submitting}
+                        className="w-full bg-transparent border-0 border-b border-gray-300 px-0 py-3 font-body text-sm text-gray-600 focus:border-sage focus:ring-0 outline-none transition-colors disabled:opacity-50"
                       >
                         <option value="" disabled>
                           Select a subject
                         </option>
 
-                        <option>General enquiry</option>
-                        <option>Products</option>
-                        <option>Membership</option>
-                        <option>Visit Green Leaf</option>
-                        <option>Other</option>
+                        <option value="General enquiry">
+                          General enquiry
+                        </option>
+
+                        <option value="Products">
+                          Products
+                        </option>
+
+                        <option value="Visit Green Leaf">
+                          Visit Green Leaf
+                        </option>
+
+                        <option value="Other">
+                          Other
+                        </option>
                       </select>
                     </div>
 
@@ -255,12 +333,26 @@ const ExperiencePage = () => {
                       </label>
 
                       <textarea
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
                         required
+                        disabled={submitting}
                         rows="4"
-                        className="w-full bg-transparent border-0 border-b border-gray-300 px-0 py-3 font-body text-sm text-gray-700 placeholder:text-gray-300 focus:border-sage focus:ring-0 outline-none resize-none transition-colors"
+                        className="w-full bg-transparent border-0 border-b border-gray-300 px-0 py-3 font-body text-sm text-gray-700 placeholder:text-gray-300 focus:border-sage focus:ring-0 outline-none resize-none transition-colors disabled:opacity-50"
                         placeholder="How can we help?"
                       />
                     </div>
+
+
+                    {/* ERROR MESSAGE */}
+                    {error && (
+                      <div className="pt-1">
+                        <p className="font-body text-sm text-red-600 leading-6">
+                          {error}
+                        </p>
+                      </div>
+                    )}
 
 
                     {/* SUBMIT */}
@@ -268,13 +360,20 @@ const ExperiencePage = () => {
 
                       <button
                         type="submit"
-                        className="group inline-flex items-center gap-4 bg-gray-800 text-white px-7 py-4 font-body text-[10px] tracking-[0.2em] uppercase hover:bg-sage transition-colors duration-300"
+                        disabled={submitting}
+                        className="group inline-flex items-center gap-4 bg-gray-800 text-white px-7 py-4 font-body text-[10px] tracking-[0.2em] uppercase hover:bg-sage transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                       >
-                        Send message
+                        {submitting ? "Sending..." : "Send message"}
 
-                        <span className="group-hover:translate-x-1 transition-transform duration-300">
-                          →
-                        </span>
+                        {!submitting && (
+                          <span className="group-hover:translate-x-1 transition-transform duration-300">
+                            →
+                          </span>
+                        )}
+
+                        {submitting && (
+                          <span className="inline-block w-3 h-3 border border-white/40 border-t-white rounded-full animate-spin" />
+                        )}
                       </button>
 
                     </div>
@@ -356,4 +455,3 @@ const ExperiencePage = () => {
 };
 
 export default ExperiencePage;
-

@@ -31,6 +31,10 @@ import ProtectedRoute from "./components/Common/ProtectedRoute";
 import JournalPage from "./pages/JournalPage";
 import JournalPostPage from "./pages/JournalPostPage";
 import ScrollToTop from "./components/Common/ScrollToTop";
+import SessionTimeout from "./components/Common/SessionTimeout";
+import AnalyticsTracker from "./components/Common/AnalyticsTracker";
+
+
 
 const App = () => {
   const [ageConfirmed, setAgeConfirmed] = useState(false);
@@ -51,6 +55,8 @@ const App = () => {
       <BrowserRouter
         future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
       >
+      <SessionTimeout />
+      <AnalyticsTracker />
       <ScrollToTop />
         <Toaster position="top-right" />
         <Routes>

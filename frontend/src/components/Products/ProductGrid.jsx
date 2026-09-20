@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PromotionalBanner from "./PromotionalBanners";
 
 const StarRating = ({ rating = 0, max = 5 }) => {
   return (
@@ -19,12 +20,23 @@ const StarRating = ({ rating = 0, max = 5 }) => {
   );
 };
 
-const ProductGrid = ({ products, loading, error }) => {
+const ProductGrid = ({
+  products,
+  loading,
+  error,
+  promotions = [],
+}) => {
+  /* =========================
+     LOADING
+  ========================== */
   if (loading) {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {[...Array(6)].map((_, i) => (
-          <div key={i} className="animate-pulse border border-gray-200 rounded-md p-3">
+          <div
+            key={i}
+            className="animate-pulse border border-gray-200 rounded-md p-3"
+          >
             <div className="bg-gray-100 rounded-sm h-[200px] mb-3" />
             <div className="h-2.5 bg-gray-100 rounded w-2/3 mb-2" />
             <div className="h-2.5 bg-gray-100 rounded w-1/3" />
@@ -34,6 +46,9 @@ const ProductGrid = ({ products, loading, error }) => {
     );
   }
 
+  /* =========================
+     ERROR
+  ========================== */
   if (error) {
     return (
       <p
@@ -45,79 +60,173 @@ const ProductGrid = ({ products, loading, error }) => {
     );
   }
 
-  if (!products || products.length === 0) return null;
+  /* =========================
+     NO PRODUCTS
+  ========================== */
+  if (!products || products.length === 0) {
+    return null;
+  }
+
+  /* =========================
+     SAFE PROMOTIONS
+  ========================== */
+  const safePromotions = Array.isArray(promotions)
+    ? promotions.filter((promo) => promo?.imageUrl)
+    : [];
+
+  /*
+    Split products into groups of 12.
+
+    Example:
+
+    4 products
+    → group 1 = 4
+
+    12 products
+    → group 1 = 12
+
+    20 products
+    → group 1 = 12
+    → group 2 = 8
+
+    36 products
+    → group 1 = 12
+    → group 2 = 12
+    → group 3 = 12
+  */
+  const productGroups = [];
+
+  for (let i = 0; i < products.length; i += 12) {
+    productGroups.push(products.slice(i, i + 12));
+  }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6">
-      {products.map((product) => (
-        <Link
-          key={product._id}
-          to={`/product/${product._id}`}
-          className="group block border border-gray-200 rounded-md overflow-hidden hover:border-gray-300 transition-colors duration-300"
-        >
-          {/* Image */}
-          <div className="bg-white h-[200px] overflow-hidden">
-            {product.images?.[0]?.url ? (
-              <img
-                src={product.images[0].url}
-                alt={product.images[0].altText || product.name}
-                className="w-full h-full object-contain p-3 transition-transform duration-700 group-hover:scale-105"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-300 text-xs">
-                No image
-              </div>
-            )}
-          </div>
+    <div className="w-full">
 
-          {/* Info */}
-          <div className="px-3 py-2.5 border-t border-gray-200 bg-sage">
-            <h3
-              className="text-sm text-white mb-0.5 truncate"
-              style={{ fontFamily: "'EB Garamond', serif", fontWeight: 400 }}
-            >
-              {product.name}
-            </h3>
+      {productGroups.map((group, groupIndex) => (
+        <div key={`product-group-${groupIndex}`}>
 
-            {/* Price + Stars */}
-            <div className="flex items-center justify-between mt-1">
-              <div className="flex items-center gap-2">
-                {product.discountPrice ? (
-                  <>
-                    <span
-                      className="text-xs text-white/60 line-through"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    >
-                      R{product.price}
-                    </span>
-                    <span
-                      className="text-xs text-white"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    >
-                      R{product.discountPrice}
-                    </span>
-                  </>
-                ) : (
-                  <span
-                    className="text-xs text-white/80"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+          {/* =========================
+              PRODUCT GRID
+          ========================== */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6">
+
+            {group.map((product) => (
+              <Link
+                key={product._id}
+                to={`/product/${product._id}`}
+                className="group block border border-gray-200 rounded-md overflow-hidden hover:border-gray-300 transition-colors duration-300"
+              >
+
+                {/* Image */}
+                <div className="bg-white h-[200px] overflow-hidden">
+                  {product.images?.[0]?.url ? (
+                    <img
+                      src={product.images[0].url}
+                      alt={
+                        product.images[0].altText ||
+                        product.name
+                      }
+                      className="w-full h-full object-contain p-3 transition-transform duration-700 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-300 text-xs">
+                      No image
+                    </div>
+                  )}
+                </div>
+
+                {/* Info */}
+                <div className="px-3 py-2.5 border-t border-gray-200 bg-sage">
+
+                  <h3
+                    className="text-sm text-white mb-0.5 truncate"
+                    style={{
+                      fontFamily: "'EB Garamond', serif",
+                      fontWeight: 400,
+                    }}
                   >
-                    R{product.price}
-                  </span>
-                )}
-              </div>
+                    {product.name}
+                  </h3>
 
-              {/* Star Rating */}
-              <StarRating rating={product.rating ?? 0} />
-            </div>
+                  {/* Price + Stars */}
+                  <div className="flex items-center justify-between mt-1">
 
-            {/* Hover underline */}
-            <div className="h-px bg-white/20 mt-2">
-              <div className="h-px bg-white w-0 group-hover:w-full transition-all duration-500" />
-            </div>
+                    <div className="flex items-center gap-2">
+
+                      {product.discountPrice ? (
+                        <>
+                          <span
+                            className="text-xs text-white/60 line-through"
+                            style={{
+                              fontFamily:
+                                "'Montserrat', sans-serif",
+                            }}
+                          >
+                            R{product.price}
+                          </span>
+
+                          <span
+                            className="text-xs text-white"
+                            style={{
+                              fontFamily:
+                                "'Montserrat', sans-serif",
+                            }}
+                          >
+                            R{product.discountPrice}
+                          </span>
+                        </>
+                      ) : (
+                        <span
+                          className="text-xs text-white/80"
+                          style={{
+                            fontFamily:
+                              "'Montserrat', sans-serif",
+                          }}
+                        >
+                          R{product.price}
+                        </span>
+                      )}
+
+                    </div>
+
+                    {/* Star Rating */}
+                    <StarRating
+                      rating={product.rating ?? 0}
+                    />
+
+                  </div>
+
+                  {/* Hover underline */}
+                  <div className="h-px bg-white/20 mt-2">
+                    <div className="h-px bg-white w-0 group-hover:w-full transition-all duration-500" />
+                  </div>
+
+                </div>
+
+              </Link>
+            ))}
+
           </div>
-        </Link>
+
+
+          {/* =========================
+              PROMOTIONAL BANNER
+          ========================== */}
+
+          {safePromotions.length > 0 && (
+            <PromotionalBanner
+              promo={
+                safePromotions[
+                  groupIndex % safePromotions.length
+                ]
+              }
+            />
+          )}
+
+        </div>
       ))}
+
     </div>
   );
 };

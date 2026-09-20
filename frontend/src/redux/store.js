@@ -9,6 +9,7 @@ import adminProductReducer from "./slices/adminProductSlice";
 import adminOrdersReducer from "./slices/adminOrderSlice";
 import promotionsReducer from "./slices/promotionsSlice";
 import blogsReducer from "./slices/blogSlice";
+import analyticsReducer from "./slices/analyticsSlice"
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     adminOrders: adminOrdersReducer,
     promotions: promotionsReducer, 
     blogs: blogsReducer,
+    analytics: analyticsReducer,
   },
 });
 

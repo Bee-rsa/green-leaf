@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPromotionsByPage } from "../../redux/slices/promotionsSlice";
-import heroImage from "../../assets/Hero1.jpg";
+import heroImage from "../../assets/image1.png";
 
 const PromotionalBanner = ({ page = "Home" }) => {
   const dispatch = useDispatch();
