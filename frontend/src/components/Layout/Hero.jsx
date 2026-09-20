@@ -47,7 +47,7 @@ const Hero = () => {
 
       {/* Right - Content */}
       <div
-        className="w-full md:w-[42%] bg-sage flex items-center justify-center px-6 sm:px-10 md:px-16 py-14 sm:py-16 md:py-0"
+        className="w-full md:w-[42%] bg-sage flex items-center justify-center px-6 sm:px-10 md:px-16 py-20 sm:py-24 md:py-0"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(-100%)",
