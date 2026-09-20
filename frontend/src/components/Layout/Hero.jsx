@@ -14,11 +14,11 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="flex flex-col md:flex-row h-[740px] sm:h-[793px] md:h-[600px] overflow-hidden">
+    <section className="flex flex-col md:flex-row w-full overflow-hidden">
 
       {/* Left - Image */}
       <div
-        className="relative w-full md:w-[58%] h-[440px] sm:h-[493px] md:h-full flex-shrink-0"
+        className="relative w-full md:w-[58%] flex-shrink-0 aspect-[1677/938]"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(-100%)",
@@ -28,10 +28,7 @@ const Hero = () => {
         <img
           src={heroImg}
           alt="Green Leaf"
-          className="w-full h-full object-cover"
-          style={{
-            objectPosition: "center 5%",
-          }}
+          className="absolute inset-0 w-full h-full object-contain"
         />
 
         {/* Mobile Heading - Centered Over Image */}
@@ -50,7 +47,7 @@ const Hero = () => {
 
       {/* Right - Content */}
       <div
-        className="w-full md:w-[42%] h-[300px] sm:h-[300px] md:h-full flex-shrink-0 bg-sage flex items-center justify-center px-6 sm:px-10 md:px-16 py-6 md:py-0"
+        className="w-full md:w-[42%] bg-sage flex items-center justify-center px-6 sm:px-10 md:px-16 py-10 md:py-0"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(-100%)",
