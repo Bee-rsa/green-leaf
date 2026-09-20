@@ -31,8 +31,8 @@ const Hero = () => {
           className="absolute inset-0 w-full h-full object-contain"
         />
 
-        {/* Mobile Heading - Centered Over Image */}
-        <div className="md:hidden absolute bottom-8 left-0 right-0 flex justify-center px-4">
+        {/* Mobile Heading - Slightly Lower */}
+        <div className="md:hidden absolute bottom-5 sm:bottom-6 left-0 right-0 flex justify-center px-4">
           <h1
             className="text-3xl sm:text-4xl text-white leading-none whitespace-nowrap"
             style={{
@@ -47,7 +47,7 @@ const Hero = () => {
 
       {/* Right - Content */}
       <div
-        className="w-full md:w-[42%] bg-sage flex items-center justify-center px-6 sm:px-10 md:px-16 py-10 md:py-0"
+        className="w-full md:w-[42%] bg-sage flex items-center justify-center px-6 sm:px-10 md:px-16 py-14 sm:py-16 md:py-0"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(-100%)",
