@@ -200,15 +200,6 @@ const AdminHomePage = () => {
    */
 
   const statCards = [
-    {
-      title: "Website Views",
-      value: formatNumber(
-        analytics.websiteViews
-      ),
-      change:
-        analytics.changes?.websiteViews,
-      icon: HiOutlineEye,
-    },
 
     {
       title: "Unique Visitors",
