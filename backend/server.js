@@ -29,6 +29,7 @@ app.use(cors({
     "https://green-leaf-vo5y.vercel.app",
     "http://localhost:5173",
     "http://localhost:3000",
+    "https://greenleafcannabis.co.za",
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
