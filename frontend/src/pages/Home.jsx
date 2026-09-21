@@ -32,14 +32,13 @@ const Home = () => {
   // Scroll to New Arrivals
   const scrollToNewArrivals = () => {
   if (newArrivalsRef.current) {
-    const yOffset = -80; // Increase/decrease this to adjust the position
-    const y =
-      newArrivalsRef.current.getBoundingClientRect().top +
-      window.pageYOffset +
-      yOffset;
+    const elementPosition =
+      newArrivalsRef.current.getBoundingClientRect().top;
+
+    const offset = 200; // Higher number = stops further down
 
     window.scrollTo({
-      top: y,
+      top: window.scrollY + elementPosition - offset,
       behavior: "smooth",
     });
   }
