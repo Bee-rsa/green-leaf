@@ -35,7 +35,7 @@ const Home = () => {
     const elementPosition =
       newArrivalsRef.current.getBoundingClientRect().top;
 
-    const offset = -80; 
+    const offset = -40; 
 
     window.scrollTo({
       top: window.scrollY + elementPosition - offset,
