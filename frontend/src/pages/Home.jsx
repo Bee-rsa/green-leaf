@@ -31,11 +31,19 @@ const Home = () => {
 
   // Scroll to New Arrivals
   const scrollToNewArrivals = () => {
-    newArrivalsRef.current?.scrollIntoView({
+  if (newArrivalsRef.current) {
+    const yOffset = -80; // Increase/decrease this to adjust the position
+    const y =
+      newArrivalsRef.current.getBoundingClientRect().top +
+      window.pageYOffset +
+      yOffset;
+
+    window.scrollTo({
+      top: y,
       behavior: "smooth",
-      block: "start",
     });
-  };
+  }
+};
 
   return (
     <div>
